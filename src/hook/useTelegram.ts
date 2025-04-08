@@ -13,7 +13,7 @@ const testUser = {
 export const useTelegram = () => {
     const [webApp, setWebApp] = useState<WebApp | null>(null);
     const [isTelegram, setIsInTelegram] = useState<boolean>(false);
-    const [user, setUser] = useState<WebAppUser | null>(null);
+    const [user, setUser] = useState<WebAppUser | null>(testUser);
 
     useEffect(() => {
         const initUser = () => {
@@ -32,7 +32,7 @@ export const useTelegram = () => {
                     const tgusr = tg.initDataUnsafe.user;
                     setUser(tgusr!);
                 } else {
-                    setUser(testUser);
+                    setUser(testUser as WebAppUser);
                 }
             } else {
                 setWebApp(null);
@@ -43,7 +43,7 @@ export const useTelegram = () => {
         initUser();
         
     }, []);
-    
+
     return {webApp, isTelegram, user};
 
 }

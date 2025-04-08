@@ -16,23 +16,38 @@ import {Pet} from './types.ts'
 const ROOT_URL = "https://tamogochi-app.vercel.app";
 
 function App() {
-  const { webApp, isTelegram, user } = useTelegram();
   const [petState, setPetState] = useState({});
+  const { isTelegram, user } = useTelegram();
+  
+  console.log("User from userTelegram ");
+  console.log(user);
+  console.log("isTelegram: " + isTelegram);
+  useEffect(() => {
+    if (user) { 
+    loadPetState(user)
+      .then( data => {
+        if (data) {
+          setPetState(data as Pet) 
+        };
+    });
+    }
+  }, [])
 
-  // Загружаем данные из localStorage при старте приложения
-  const loadPetState = async () => {
+  // Загружаем данные из бэка при старте приложения
+  const loadPetState = async (usr) => {
     try {
-      console.log("user from tg");
-      console.log(user);
+      console.log("usr");
+      console.log(usr);
       const responseJson = await fetch(ROOT_URL + "/login", {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(user)
+        body: JSON.stringify(usr)
       })
         .then(function (response) {
+          console.log("User response: " + JSON.stringify(response));
           return response.json();
         })
       // .then(function(r) {
@@ -80,14 +95,20 @@ function App() {
   useEffect(() => {
     const interval = setInterval(() => {
       commonPetAction("/api/pets/state")
-        .then(data =>
-          setPetState(data as Pet)
+        .then(data => {
+          if (data) {
+            setPetState(data as Pet) 
+          };
+        }
         );
     }, 5000);
     return () => clearInterval(interval);
   }, [petState]);
 
   const commonPetAction = async (path: string) => {
+    if (!petState || !petState.id) {
+      return null;
+    }
     const pid = {
       "petId": petState.id,
     };
@@ -165,13 +186,6 @@ function App() {
       resetPetData();
     }
   }
-
-  useEffect(() => {
-    loadPetState()
-      .then(data =>
-        setPetState(data as Pet)
-      );
-  }, [])
 
   return (
     <div className="app">
