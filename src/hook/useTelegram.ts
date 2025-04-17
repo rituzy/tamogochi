@@ -13,10 +13,12 @@ const testUser = {
 export const useTelegram = () => {
     const [webApp, setWebApp] = useState<WebApp | null>(null);
     const [isTelegram, setIsInTelegram] = useState<boolean>(false);
-    const [user, setUser] = useState<WebAppUser | null>(testUser);
+    const [user, setUser] = useState<WebAppUser | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const initUser = () => {
+            setLoading(true);
             const tg = window.Telegram.WebApp;
             if (tg) {
                 setWebApp(tg);
@@ -38,12 +40,13 @@ export const useTelegram = () => {
                 setWebApp(null);
             }
 
-        }
+            setLoading(false);
 
+        }
         initUser();
         
     }, []);
 
-    return {webApp, isTelegram, user};
+    return {webApp, isTelegram, user, loading};
 
 }

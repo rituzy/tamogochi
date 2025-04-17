@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "lt": "lt --port 5173 --subdomain myname-tamogochi-test"
+    "lt": "lt --port 5173 --subdomain my-name-tamogochi-tg-bot"
   },
   "dependencies": {
     "@types/telegram-web-app": "^7.10.1",

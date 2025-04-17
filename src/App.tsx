@@ -16,12 +16,14 @@ import {Pet} from './types.ts'
 const ROOT_URL = "https://tamogochi-app.vercel.app";
 
 function App() {
+  console.log("Start App!");
   const [petState, setPetState] = useState({});
-  const { isTelegram, user } = useTelegram();
+  const { isTelegram, user, loading } = useTelegram();
   
   console.log("User from userTelegram ");
   console.log(user);
   console.log("isTelegram: " + isTelegram);
+  
   useEffect(() => {
     if (user) { 
     loadPetState(user)
@@ -31,7 +33,25 @@ function App() {
         };
     });
     }
-  }, [])
+  }, [user])
+
+  // Периодическое обновление показателей
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     commonPetAction("/api/pets/state")
+  //       .then(data => {
+  //         if (data) {
+  //           setPetState(data as Pet) 
+  //         };
+  //       }
+  //       );
+  //   }, 5000);
+  //   return () => clearInterval(interval);
+  // }, [petState]);
+
+  if (loading) {
+    return <div>Загрузка...</div>
+  }
 
   // Загружаем данные из бэка при старте приложения
   const loadPetState = async (usr) => {
@@ -90,20 +110,6 @@ function App() {
       console.error('Ошибка при сбросе данных:', error);
     }
   };
-
-  // Периодическое обновление показателей
-  useEffect(() => {
-    const interval = setInterval(() => {
-      commonPetAction("/api/pets/state")
-        .then(data => {
-          if (data) {
-            setPetState(data as Pet) 
-          };
-        }
-        );
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [petState]);
 
   const commonPetAction = async (path: string) => {
     if (!petState || !petState.id) {
