@@ -5,7 +5,7 @@ import { Pet } from "../types/types.ts"
 
 export const useLoadPetState = () => {
     const { user } = useTelegram();
-    const [petState, setPetState] = useState({});
+    const [petState, setPetState] = useState<Pet | null>(null);
     const [loadingPetState, setLoadingPetState] = useState<boolean>(true);
 
     useEffect(() => {
