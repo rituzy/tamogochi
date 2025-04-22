@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "tamogochi",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,9 +8,10 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "lt": "lt --port 5173 --subdomain myname-tamogochi-test"
+    "lt": "lt --port 5173 --subdomain my-name-tamogochi-tg-bot"
   },
   "dependencies": {
+    "@types/telegram-web-app": "^7.10.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
