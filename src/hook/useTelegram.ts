@@ -1,14 +1,5 @@
 import { useEffect, useState } from "react"
-
-const testUser = {
-    id: 1234,
-    first_name: "Zafod",
-    last_name: "Bibblebrox",
-    username: "zbibblebrox",
-    language_code: "ru",
-    photo_url: "",
-    is_premium: false,
-};
+import {TelegramUser} from "../types/types.ts"
 
 export const useTelegram = () => {
     const [webApp, setWebApp] = useState<WebApp | null>(null);
@@ -22,9 +13,7 @@ export const useTelegram = () => {
             const tg = window.Telegram.WebApp;
             if (tg) {
                 setWebApp(tg);
-
                 const isValidTelegramData = tg && tg.initDataUnsafe && Object.keys(tg.initDataUnsafe).length > 0 && tg.initDataUnsafe.user;
-
                 if (isValidTelegramData) {
                     setIsInTelegram(true);
                     tg.ready();
@@ -34,19 +23,31 @@ export const useTelegram = () => {
                     const tgusr = tg.initDataUnsafe.user;
                     setUser(tgusr!);
                 } else {
-                    setUser(testUser as WebAppUser);
+                    setUser(USER_MOCKED as WebAppUser);
                 }
             } else {
                 setWebApp(null);
             }
-
             setLoading(false);
-
         }
-        initUser();
-        
+
+        try{
+            initUser();
+        } catch(e) {
+            setLoading(false);
+        }
+
     }, []);
 
-    return {webApp, isTelegram, user, loading};
-
+    return { webApp, isTelegram, user, loading };
 }
+
+const USER_MOCKED = {
+    id: 1234, 
+    first_name: "Name_mocked", 
+    last_name: "Lastname_mocked", 
+    username: "username_mocked", 
+    language_code: "ru", 
+    photo_url: "photo_url_mocked", 
+    is_premium: false
+} as TelegramUser;
