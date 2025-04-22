@@ -1,7 +1,7 @@
 import { ROOT_URL } from "./constants.ts"
 import { Pet } from "../types/types.ts"
 
-export const petAction = async (petState, path) => {
+export const petAction = async (petState: Pet | null, path: string): Promise<Pet | null> => {
     if (!petState || !petState.id) {
         return null;
     }

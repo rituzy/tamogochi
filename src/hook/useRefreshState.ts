@@ -3,7 +3,7 @@ import { petAction } from '../api/petAction.ts'
 import { Pet } from "../types/types.ts"
 
 export const useRefreshPetState = () => {
-    const [petState, setPetState] = useState({});
+    const [petState, setPetState] = useState<Pet | null>(null);
 
     useEffect(() => {
         const interval = setInterval(() => {

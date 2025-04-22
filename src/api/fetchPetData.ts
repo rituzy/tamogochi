@@ -1,7 +1,7 @@
 import { ROOT_URL } from "./constants.ts"
 import { Pet } from "../types/types.ts"
 
-export const fetchPetData = async (user) => {
+export const fetchPetData = async (user: WebAppUser | null)  => {
     const responseJson = await fetch(ROOT_URL + "/login", {
         method: 'POST',
         headers: {
@@ -29,8 +29,6 @@ export const fetchPetData = async (user) => {
             });
 
         const petData = rawResponsePet.message;
-        console.log('pet content: ');
-        console.log(petData);
         return petData as Pet;
     }
 }
