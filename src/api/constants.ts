@@ -1,0 +1,1 @@
+export const ROOT_URL = "https://tamogochi-app.vercel.app";
