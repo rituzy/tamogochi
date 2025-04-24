@@ -11,8 +11,10 @@ export const useLoadPetState = () => {
     useEffect(() => {
         const loadPetState = async () => {
             try {
-                const result = await fetchPetData(user);
-                setPetState(result as Pet);
+                if (user) {
+                    const result = await fetchPetData(user);
+                    setPetState(result as Pet);
+                }
             } catch (error) {
                 console.error('Error:', error);
             } finally {
@@ -23,5 +25,5 @@ export const useLoadPetState = () => {
         loadPetState();
     }, [user]);
 
-    return { petState, loadingPetState};
+    return { petState, loadingPetState };
 }
