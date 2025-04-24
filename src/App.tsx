@@ -24,6 +24,9 @@ function App() {
     return <div>Загрузка...</div>
   }
 
+  console.log("petstate: ");
+  console.log(petState);
+
   // Кормление питомца
   const feedPet = () => petAction(petState, "/api/pets/feed");
 
