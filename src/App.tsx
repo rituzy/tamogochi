@@ -17,8 +17,8 @@ import { petAction } from './api/petAction.ts'
 function App() {
   console.log("Start App!");
   const { loading } = useTelegram();
-  const { petState, loadingPetState } = useLoadPetState();
-  useRefreshPetState();
+  const { petState, setPetState, loadingPetState } = useLoadPetState();
+  useRefreshPetState(petState, setPetState);
 
   if (loading || loadingPetState) {
     return <div>Загрузка...</div>

@@ -23,5 +23,5 @@ export const useLoadPetState = () => {
         loadPetState();
     }, [user]);
 
-    return { petState, loadingPetState};
+    return { petState, setPetState, loadingPetState};
 }
